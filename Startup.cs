@@ -1,40 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using blazor.Models;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using blazor.Data;
-using System.IO;
 using Microsoft.Extensions.ML;
-using blazor.Models;
+using System.IO;
 
 namespace blazor
 {
     public class Startup
     {
-        private readonly string _modelPath;
-
-        public static string GetAbsolutePath(string relativePath)
+        private static string GetAbsolutePath(string relativePath)
         {
             FileInfo _dataRoot = new FileInfo(typeof(Program).Assembly.Location);
             string assemblyFolderPath = _dataRoot.Directory.FullName;
 
-            string fullPath = Path.Combine(assemblyFolderPath, relativePath);
-            return fullPath;
+            return Path.Combine(assemblyFolderPath, relativePath);
         }
-
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            _modelPath = GetAbsolutePath("sentiment_model.zip");
         }
 
         public IConfiguration Configuration { get; }
@@ -45,10 +32,12 @@ namespace blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
-            services.AddPredictionEnginePool<ModelInput, ModelOutput>()
-                .FromFile(_modelPath);
+            var modelPath = GetAbsolutePath("sentiment_model.zip");
+
+            services
+                .AddPredictionEnginePool<ModelInput, ModelOutput>()
+                .FromFile(modelPath);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

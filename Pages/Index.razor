@@ -1,13 +1,20 @@
 ﻿@page "/"
 @inherits IndexBase
 
-<h1>@Input.SentimentText</h1>
-
-<h2>@Sentiment</h2>
-
 <EditForm Model="@Input">
-    <InputText @bind-Value="@Input.SentimentText"></InputText>
+    <div class="form-group">
+        <h2>Sentiment Analysis</h2>
+        <InputText id="sentiment"
+                   class="form-control"
+                   placeholder="How do you feel?"
+                   @bind-Value="@Input.SentimentText"></InputText>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary"
+                @onclick="MakePrediction">
+            Lets find out
+        </button>
+    </div>
 </EditForm>
 
-
-<button class="btn btn-primary" @onclick="MakePrediction">Click</button>
+<h3>@Sentiment</h3>

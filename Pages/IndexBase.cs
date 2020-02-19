@@ -21,7 +21,6 @@ namespace blazor.Pages
             var toxic = Convert.ToBoolean(prediction.Prediction) ? "Not Toxic" : "Toxic";
 
             Sentiment = $"Sentiment is: {toxic} with a probability of: {prediction.Probability} score: {prediction.Score}";
-
         }
     }
 }
