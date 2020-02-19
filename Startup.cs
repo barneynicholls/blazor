@@ -11,14 +11,6 @@ namespace blazor
 {
     public class Startup
     {
-        private static string GetAbsolutePath(string relativePath)
-        {
-            FileInfo _dataRoot = new FileInfo(typeof(Program).Assembly.Location);
-            string assemblyFolderPath = _dataRoot.Directory.FullName;
-
-            return Path.Combine(assemblyFolderPath, relativePath);
-        }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -64,6 +56,14 @@ namespace blazor
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+        }
+
+        private static string GetAbsolutePath(string relativePath)
+        {
+            FileInfo _dataRoot = new FileInfo(typeof(Program).Assembly.Location);
+            string assemblyFolderPath = _dataRoot.Directory.FullName;
+
+            return Path.Combine(assemblyFolderPath, relativePath);
         }
     }
 }
