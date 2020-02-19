@@ -1,0 +1,13 @@
+﻿@page "/"
+@inherits IndexBase
+
+<h1>@Input.SentimentText</h1>
+
+<h2>@Sentiment</h2>
+
+<EditForm Model="@Input">
+    <InputText @bind-Value="@Input.SentimentText"></InputText>
+</EditForm>
+
+
+<button class="btn btn-primary" @onclick="MakePrediction">Click</button>
